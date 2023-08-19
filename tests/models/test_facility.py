@@ -1,55 +1,50 @@
 import pytest
 import yaml
 from pydantic import ValidationError
-import ssr
-from ssr import Facility
+from ssr import load_yaml, Facility
 
-facility1 = '''
-!Facility
-name: Facility 1
-type: Satellite Control Site
-lat: 12.345
-lon: 23.456
-'''
-
-facility2 = '''
-!Facility
-name: Facility 2
-type: Satellite Control Site
-lat: 23.456
-lon: 34.567
-'''
-
-@pytest.mark.parametrize('facility', [facility1, facility2])
-def test_facility_1(facility):
-    yaml.load(facility, yaml.FullLoader)
+def test_facility_1():
+    facility = '''
+        ---!Facility
+        name: Valid Facility
+        type: Satellite Control Site
+        lat: 12.345
+        lon: 23.456
+    '''
+    seq = load_yaml(facility)
+    print(seq)
+    for f in seq:
+        assert isinstance(f, Facility)
 
 def test_invalid_type():
     facility = '''
-        name: Facility 3
+    ---!Facility
+        name: Invalid Type
         type: Invalid Facility Type
         lat: 12.345
         lon: 23.456
     '''
     with pytest.raises(ValidationError):
-        Facility.from_yaml(facility)
+        load_yaml(facility)
 
 def test_invalid_latitude():
     facility = '''
-        name: Facility 3
+    ---!Facility
+        name: Invalid Latitude
         type: Satellite Control Site
         lat: 99.345
         lon: 23.456
     '''
     with pytest.raises(ValidationError):
-        Facility.from_yaml(facility)
+        load_yaml(facility)
 
-def test_invalid_latitude():
+def test_invalid_longitude():
     facility = '''
-        name: Facility 3
+    ---!Facility
+        name: Invalid Longitude
         type: Satellite Control Site
         lat: 12.345
         lon: 320.456
     '''
     with pytest.raises(ValidationError):
-        Facility.from_yaml(facility)
+        load_yaml(facility)
