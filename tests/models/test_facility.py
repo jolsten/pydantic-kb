@@ -20,10 +20,6 @@ lat: 23.456
 lon: 34.567
 '''
 
-from ssr import Facility
-import yaml
-yaml.add_constructor('Facility', Facility, yaml.FullLoader)
-
 @pytest.mark.parametrize('facility', [facility1, facility2])
 def test_facility_1(facility):
     yaml.load(facility, yaml.FullLoader)

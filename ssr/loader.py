@@ -1,8 +1,13 @@
 import yaml
-from .typing import YamlSource
+from yaml import safe_load_all
 from .models.base import BaseModel
+from .typing import YamlSource
 
-def load_object(y: YamlSource) -> BaseModel:
-    yml = yaml.safe_load(y)
-    print(yml)
-    
+class SSRSafeLoader(yaml.SafeLoader):
+    pass
+
+for cls in BaseModel.__subclasses__():
+    yaml.add_constructor(f'!{cls.__name__}', cls.yaml_constructor, Loader=SSRSafeLoader)
+
+def load_yaml(y: YamlSource):
+    return yaml.load(y, SSRSafeLoader)
