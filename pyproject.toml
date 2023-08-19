@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel"]
+
+[project]
+name = "ssr"
+dependencies = [
+    "pydantic>=2.0",
+    "pydantic-yaml>=1.1",
+    "pyyaml>=6.0",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "hypothesis",
+  "pytest",
+  "pytest-cov",
+]
+
+[tool.setuptools]
+packages = ["ssr"]
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=ssr --cov-report html"
+testpaths = [
+    "tests",
+]
