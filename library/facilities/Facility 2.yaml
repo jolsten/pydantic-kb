@@ -1,3 +1,4 @@
+!!python/object:ssr.Facility
 name: Facility 2
 type: Satellite Control Site
 lat: 23.456

@@ -16,11 +16,17 @@ def check_longitude(v: float) -> float:
 Latitude = Annotated[float, AfterValidator(check_latitude)]
 Longitude = Annotated[float, AfterValidator(check_longitude)]
 
-INTEGER = re.compile(r'^\d+$')
+from .utils import alpha5_to_catalog_number
 
-# def convert_to_alpha5(v: Union[str, int]) -> str:
-#     if INTEGER.match(str(v)) and v >= 100000:
-#         pass
+def convert_alpha5_to_number(v: Union[str, int]) -> int:
+    return alpha5_to_catalog_number(str(v))
 
-#         # Do stuff
+def check_alpha5_range(v: int) -> int:
+    assert (0 <= v and v < 340_000)
+    return v
 
+CatalogNumber = Annotated[
+    Union[int, str],
+    AfterValidator(convert_alpha5_to_number),
+    AfterValidator(check_alpha5_range)
+]
