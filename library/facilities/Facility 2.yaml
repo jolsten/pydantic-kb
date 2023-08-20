@@ -1,5 +1,5 @@
-!!python/object:ssr.Facility
-name: Facility 2
+!Facility
+name: Facility 1
 type: Satellite Control Site
-lat: 23.456
-lon: 34.567
+lat: 12.345
+lon: 23.456

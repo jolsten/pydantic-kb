@@ -1,19 +1,19 @@
-import enum
+from typing import Literal
 from .base import BaseModel
 from ..typing import Latitude, Longitude
 
-class FacilityType(str, enum.Enum):
-    UNK = 'Unknown'
-    SCS = 'Satellite Control Site'
-    SCC = 'Satellite Control Center'
-    DRS = 'Data Reception Site'
-    SLC = 'Space Launch Complex'
-    SLS = 'Space Launch Site'
-    OTH = 'Other'
-
+FacilityType = Literal[
+    'Unknown',
+    'Other',
+    'Satellite Control Center',
+    'Satellite Control Site',
+    'Data Reception Site',
+    'Space Launch Complex',
+    'Space Launch Site',
+]
 
 class Facility(BaseModel):
     name: str
-    type: FacilityType = FacilityType.UNK
+    type: FacilityType
     lat: Latitude
     lon: Longitude
