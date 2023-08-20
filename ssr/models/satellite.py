@@ -1,9 +1,13 @@
-import enum
 from typing import Optional, Literal
 from .base import BaseModel
-from ..typing import CatalogNumber, ESV
+from .country import Country
+from ..typing import CatalogNumber
 
-Manufacturer = Literal["Boeing", "Lockheed Martin"]
+Manufacturer = Literal[
+    "Boeing",
+    "Lockheed Martin",
+    "Northrop Grumman",
+]
 
 class Platform(BaseModel):
     name: str
@@ -11,5 +15,6 @@ class Platform(BaseModel):
 
 class Satellite(BaseModel):
     name: str
-    catalog: CatalogNumber
+    country: Country
+    catalog: Optional[CatalogNumber]
     platform: Optional[Platform]

@@ -1,7 +1,11 @@
 import io
-import re
-from typing import Union, Annotated
+import pathlib
+from typing import Union, Annotated, Literal
 from pydantic import AfterValidator
+
+from .utils import alpha5_to_catalog_number
+
+PathLike = Union[str, bytes, pathlib.Path]
 
 YamlSource = Union[str, bytes, io.IOBase]
 
@@ -15,8 +19,6 @@ def check_longitude(v: float) -> float:
 
 Latitude = Annotated[float, AfterValidator(check_latitude)]
 Longitude = Annotated[float, AfterValidator(check_longitude)]
-
-from .utils import alpha5_to_catalog_number
 
 def convert_alpha5_to_number(v: Union[str, int]) -> int:
     return alpha5_to_catalog_number(str(v))
