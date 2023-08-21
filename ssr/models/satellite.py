@@ -1,7 +1,8 @@
 from typing import Optional, Literal
+from pydantic import Field
 from .base import BaseModel
 from .country import Country
-from ..typing import CatalogNumber
+from ..typing import CatalogNumber, ESV
 
 Manufacturer = Literal[
     "Boeing",
@@ -15,6 +16,6 @@ class Platform(BaseModel):
 
 class Satellite(BaseModel):
     name: str
-    country: Country
-    catalog: Optional[CatalogNumber]
-    platform: Optional[Platform]
+    country: Optional[Country] = None
+    catalog: Optional[CatalogNumber] = None
+    platform: Optional[Platform] = None

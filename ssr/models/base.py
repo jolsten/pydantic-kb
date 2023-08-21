@@ -1,13 +1,7 @@
 import yaml
-from pydantic import BaseModel as _BaseModel
-from pydantic_yaml import parse_yaml_raw_as
-from ..typing import YamlSource
+from beanie import Document as _Document
 
-class BaseModel(_BaseModel):
-    @classmethod
-    def from_yaml(cls, yml: YamlSource) -> 'BaseModel':
-        return parse_yaml_raw_as(cls, yml)
-
+class BaseModel(_Document):
     @classmethod
     def _yaml_constructor(cls, loader: yaml.BaseLoader, node: yaml.MappingNode):
         kwargs = loader.construct_mapping(node)

@@ -14,6 +14,6 @@ FacilityType = Literal[
 
 class Facility(BaseModel):
     name: str
-    type: FacilityType
+    type: FacilityType = FacilityType.__args__[0]
     lat: Latitude
     lon: Longitude
